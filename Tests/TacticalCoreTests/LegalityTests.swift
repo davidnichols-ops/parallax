@@ -2,6 +2,12 @@ import XCTest
 @testable import TacticalCore
 
 final class LegalityTests: XCTestCase {
+
+    func testOpeningFluxReserveSupportsExtendedExchange() {
+        let state = GameState(board: BoardFactory.triad(), matchSeed: 1)
+        XCTAssertEqual(state.playerStates[.player1]?.flux, 15_000)
+        XCTAssertEqual(state.playerStates[.player2]?.flux, 15_000)
+    }
     var board: BoardDefinition!
     var state: GameState!
 

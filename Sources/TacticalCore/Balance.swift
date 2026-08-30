@@ -6,7 +6,9 @@ public enum Balance {
     public static let version = 1
 
     // Flux (stored in hundredths; display = value/100)
-    public static let maxFlux = 10_000
+    /// A deeper reserve keeps the opening exchange strategic instead of
+    /// forcing an immediate yield after a handful of actions.
+    public static let maxFlux = 15_000
     public static let baseRegen = 40
     public static let stableNodeRate = 8
     public static let cycleRate = 25
