@@ -6,6 +6,23 @@ This is an independent fan recreation with original rules, geometry, and synthes
 
 Copyright © 2026 David Nichols. All rights reserved. See [LICENSE](LICENSE) and [content and attribution](docs/licensing-and-attribution.md).
 
+## Screenshots
+
+![Grandmaster board from an oblique camera angle](docs/screenshots/grandmaster-oblique-view.png)
+
+| Six-plane arena | Replay theater |
+| --- | --- |
+| ![Grandmaster six-plane arena](docs/screenshots/grandmaster-six-plane-view.png) | ![Replay theater board view](docs/screenshots/replay-theater-board-view.png) |
+
+<details>
+<summary>More gameplay views</summary>
+
+![Grandmaster board from the front](docs/screenshots/grandmaster-front-view.png)
+
+![Expanded replay theater view](docs/screenshots/replay-theater-expanded-view.png)
+
+</details>
+
 ## Run
 
 Open the DMG, drag **Parallax.app** to **Applications**, then launch it from Finder. Do not run the executable inside the app from Terminal.
