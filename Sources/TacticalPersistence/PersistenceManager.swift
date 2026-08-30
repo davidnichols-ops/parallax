@@ -89,8 +89,8 @@ public final class PersistenceManager {
         /// means "derive from botPersonality" (the default, backward-compatible
         /// behavior). Decoded with a default so older saved prefs still load.
         public var botPersonaId: String = ""
-        public var sfxVolume: Float = 0.7
-        public var ambienceVolume: Float = 0.3
+        public var sfxVolume: Float = 0.05
+        public var ambienceVolume: Float = 1.0
         public var muted: Bool = false
         public var reduceMotion: Bool = false
         public var highContrast: Bool = false
@@ -112,8 +112,8 @@ public final class PersistenceManager {
             botDifficulty = try c.decodeIfPresent(String.self, forKey: .botDifficulty) ?? "master"
             botPersonality = try c.decodeIfPresent(String.self, forKey: .botPersonality) ?? "balanced"
             botPersonaId = try c.decodeIfPresent(String.self, forKey: .botPersonaId) ?? ""
-            sfxVolume = try c.decodeIfPresent(Float.self, forKey: .sfxVolume) ?? 0.7
-            ambienceVolume = try c.decodeIfPresent(Float.self, forKey: .ambienceVolume) ?? 0.3
+            sfxVolume = try c.decodeIfPresent(Float.self, forKey: .sfxVolume) ?? 0.05
+            ambienceVolume = try c.decodeIfPresent(Float.self, forKey: .ambienceVolume) ?? 1.0
             muted = try c.decodeIfPresent(Bool.self, forKey: .muted) ?? false
             reduceMotion = try c.decodeIfPresent(Bool.self, forKey: .reduceMotion) ?? false
             highContrast = try c.decodeIfPresent(Bool.self, forKey: .highContrast) ?? false

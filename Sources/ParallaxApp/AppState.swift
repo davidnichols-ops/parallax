@@ -47,8 +47,8 @@ public final class AppState: ObservableObject {
     @Published public var boardId: String = "triad"
 
     // Audio
-    @Published public var sfxVolume: Float = 0.7
-    @Published public var ambienceVolume: Float = 0.3
+    @Published public var sfxVolume: Float = 0.05
+    @Published public var ambienceVolume: Float = 1.0
     @Published public var muted: Bool = false
 
     // Haptics — optional trackpad feedback for the fingertip duel feel.

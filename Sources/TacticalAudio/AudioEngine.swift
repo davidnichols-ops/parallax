@@ -19,10 +19,11 @@ public final class AudioEngine {
     private var nextVoice = 0
     public private(set) var isAvailable = false
 
-    public var sfxVolume: Float = 0.7 {
+    /// Default mix keeps action sounds subtle beneath the Enterprise-style drone.
+    public var sfxVolume: Float = 0.05 {
         didSet { sfxMixer?.outputVolume = sfxVolume }
     }
-    public var ambienceVolume: Float = 0.3 {
+    public var ambienceVolume: Float = 1.0 {
         didSet { ambienceMixer?.outputVolume = ambienceVolume }
     }
     public var muted: Bool = false {

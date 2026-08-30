@@ -40,6 +40,17 @@ final class TrainingProgressTests: XCTestCase {
 
     // MARK: - 1. Old replay compatibility (pre-Segment-14 v2 replays)
 
+    func testAudioDefaultsFavorAmbience() throws {
+        let defaults = PersistenceManager.Preferences()
+        XCTAssertEqual(defaults.sfxVolume, 0.05, accuracy: 0.0001)
+        XCTAssertEqual(defaults.ambienceVolume, 1.0, accuracy: 0.0001)
+
+        let legacy = "{}".data(using: .utf8)!
+        let decoded = try JSONDecoder().decode(PersistenceManager.Preferences.self, from: legacy)
+        XCTAssertEqual(decoded.sfxVolume, 0.05, accuracy: 0.0001)
+        XCTAssertEqual(decoded.ambienceVolume, 1.0, accuracy: 0.0001)
+    }
+
     /// A v2 replay written before Segment 14 (no persona-id fields) must
     /// decode with nil persona ids. This confirms the new optional fields
     /// are backward-compatible — no version bump needed.
