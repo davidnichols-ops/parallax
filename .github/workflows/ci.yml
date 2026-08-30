@@ -1,0 +1,84 @@
+name: CI
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: Build & Test
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode_15.3.app/Contents/Developer || true
+
+      - name: Build
+        run: swift build 2>&1
+
+      - name: Run tests
+        run: swift test 2>&1
+
+      - name: Run bot benchmark
+        run: swift run parallax-tools benchmark 2>&1
+
+      - name: Validate boards
+        run: |
+          swift run parallax-tools validate-board triad
+          swift run parallax-tools validate-board grandmaster
+
+      - name: Packaging script tests
+        run: /bin/bash Scripts/test-build-release.sh
+
+      - name: SBOM generation smoke test
+        run: |
+          ./Scripts/generate-sbom.sh --version 0.0.0-ci --output /tmp/parallax-sbom-ci.json
+          ./Scripts/generate-sbom.sh --validate /tmp/parallax-sbom-ci.json
+
+  release:
+    name: Release Build
+    needs: test
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode_15.3.app/Contents/Developer || true
+
+      - name: Derive version from git tag
+        id: version
+        run: echo "version=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Build release
+        run: swift build -c release --product ParallaxApp
+
+      - name: Create app bundle and DMG
+        run: |
+          ./Scripts/build-release.sh \
+            --version "${{ steps.version.outputs.version }}" \
+            --output ./dist
+
+      - name: Generate SBOM
+        run: |
+          ./Scripts/generate-sbom.sh \
+            --version "${{ steps.version.outputs.version }}" \
+            --output ./dist/parallax-sbom.json
+          ./Scripts/generate-sbom.sh --validate ./dist/parallax-sbom.json
+
+      - name: Verify bundle
+        run: ./Scripts/verify-bundle.sh ./dist/Parallax.app
+
+      - name: Upload DMG
+        uses: actions/upload-artifact@v4
+        with:
+          name: Parallax-${{ steps.version.outputs.version }}-dmg
+          path: ./dist/Parallax-${{ steps.version.outputs.version }}.dmg
+
+      - name: Upload SBOM
+        uses: actions/upload-artifact@v4
+        with:
+          name: Parallax-${{ steps.version.outputs.version }}-sbom
+          path: ./dist/parallax-sbom.json

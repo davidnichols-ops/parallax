@@ -1,0 +1,23 @@
+# Swift Package Manager build output
+.build/
+.swiftpm/
+
+# Release packaging output (build-release.sh default)
+dist/
+
+# Transient iconset copy created by build-release.sh from AppIcon.appiconset
+# (iconutil requires .iconset naming). Regenerated on every build — do not
+# commit. The source-of-truth PNGs live in Scripts/AppIcon.appiconset/ and
+# the assembled .icns in Scripts/AppIcon.icns (both committed).
+Scripts/AppIcon.iconset/
+
+# macOS metadata
+.DS_Store
+*.swp
+*~
+
+# Stray logs (not part of the project — MAOS MCP server log)
+logs/
+
+# Backup artifacts from build-release.sh recoverable_backup()
+*.backup-*
